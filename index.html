@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <title>Cadastro Profissional</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500&family=Open+Sans:wght@300;400;500;600&display=swap");
+      * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+        font-family: "Inter", sans-serif;
+      }
+
+      body {
+        width: 100%;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: #2a6d3b;
+      }
+
+      .container {
+        width: 80%;
+        height: 80vh;
+        display: flex;
+        box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.212);
+      }
+
+      .form-image {
+        width: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #ffe28dd7;
+        padding: 1rem;
+      }
+
+      .form-image img {
+        width: 31rem;
+      }
+
+      .form {
+        width: 50%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background-color: #fff;
+        padding: 3rem;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .form-header {
+        margin-bottom: 3rem;
+        display: flex;
+        justify-content: space-between;
+      }
+
+      .form-header h1::after {
+        content: "";
+        display: block;
+        width: 5rem;
+        height: 0.3rem;
+        background-color: #2a6d3b;
+        margin: 0 auto;
+        position: absolute;
+        border-radius: 10px;
+      }
+
+      .input-group {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        padding: 1rem 0;
+      }
+
+      .input-box {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 1.1rem;
+      }
+
+      .input-box-group {
+        flex: 1;
+        min-width: 150px;
+      }
+
+      .additional-fields-row {
+        display: flex;
+        gap: 20px;
+     }
+
+      .input-box input,
+      .input-box select {
+        margin: 0.6rem 0;
+        padding: 0.8rem 1.2rem;
+        border: none;
+        border-radius: 10px;
+        box-shadow: 1px 1px 6px #0000001c;
+        font-size: 0.8rem;
+      }
+
+      .input-box select {
+        background-color: #ffffff;
+        cursor: pointer;
+      }
+
+      .input-box input:hover,
+      .input-box select:hover {
+        background-color: #eeeeee75;
+      }
+
+      .input-box input:focus-visible,
+      .input-box select:focus-visible {
+        outline: 1px solid #2a6d3b;
+      }
+
+      .input-box label,
+      .gender-title h6 {
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: #000000c0;
+      }
+
+      .input-box input::placeholder,
+      .input-box select {
+        color: #000000be;
+      }
+
+      .gender-group {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 0.62rem;
+        padding: 0 0.5rem;
+      }
+
+      .gender-input {
+        display: flex;
+        align-items: center;
+      }
+
+      .gender-input input {
+        margin-right: 0.35rem;
+      }
+
+      .gender-input label {
+        font-size: 0.81rem;
+        font-weight: 600;
+        color: #000000c0;
+      }
+
+      .continue-button button {
+        width: 100%;
+        margin-top: 2.5rem;
+        border: none;
+        background-color: #2a6d3b;
+        padding: 0.62rem;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      .continue-button button:hover {
+        background-color: #2a6d3b;
+      }
+
+      .continue-button button a {
+        text-decoration: none;
+        font-size: 0.93rem;
+        font-weight: 500;
+        color: #fff;
+      }
+
+      @media screen and (max-width: 1330px) {
+        .form-image {
+          display: none;
+        }
+        .container {
+          width: 50%;
+        }
+        .form {
+          width: 100%;
+        }
+      }
+
+      @media screen and (max-width: 1064px) {
+        .container {
+          width: 90%;
+          height: auto;
+        }
+        .input-group {
+          flex-direction: column;
+          z-index: 5;
+          padding-right: 5rem;
+          max-height: 10rem;
+          overflow-y: scroll;
+          flex-wrap: nowrap;
+        }
+        .gender-inputs {
+          margin-top: 2rem;
+        }
+        .gender-group {
+          flex-direction: column;
+        }
+        .gender-title h6 {
+          margin: 0;
+        }
+        .gender-input {
+          margin-top: 0.5rem;
+        }
+      }
+
+      .additional-fields {
+        display: none;
+        flex-direction: column;
+      }
+
+      .additional-fields input {
+        margin: 0.6rem 0;
+      }
+    </style>
+
+<script>      
+      function enviar() {
+            event.preventDefault();
+
+            var unidade = document.getElementById("unidade").value;
+            var nomecompleto = document.getElementById("nomecompleto").value;
+            var nascimento = document.getElementById("nascimento").value;
+            var endereco = document.getElementById("endereco").value;
+            var bairro = document.getElementById("bairro").value;
+            var cpf = document.getElementById("cpf").value;
+            var numeroConselho = document.getElementById("numeroConselho").value;
+            var telefone = document.getElementById("telefone").value;
+            var funcaoProfissional = document.getElementById("funcaoProfissional").value;
+            var tipoConselho = document.getElementById("tipoConselho").value;
+            var especialidade = document.getElementById("especialidade").value;
+
+            if (
+                unidade === '' ||
+                nomecompleto === '' ||
+                nascimento === '' ||
+                cpf === '' ||
+                bairro === '' ||
+                telefone === '' ||
+                numeroConselho === ''
+            ) {
+                alert("Preencha todos os campos!");
+            } else if (tipoConselho === 'CRM' && funcaoProfissional === "" && especialidade === "") {
+                alert("Preencha os dados do Médico!");
+            } else {
+                document.getElementById("formpsicologo").submit();
+            }
+        }
+        function exibeFuncaoMedico(tipoConselho) {
+      const conselhoSelect = document.getElementById("conselho");
+      const additionalFields = document.getElementById("additionalFields");
+      const selectedValue = conselhoSelect.value;
+
+      if (selectedValue) {
+        additionalFields.style.display = "flex";
+      } else {
+        additionalFields.style.display = "none";
+      }
+
+      function exibeCamposSetoresProfissional() {
+        const setoreProfissional = document.getElementById("selecioneProfissional")
+        const adicionarProfissonal = document.getElementById("adicionarProfissonal")
+      }
+
+      function exibeFuncaoMedico() {
+        const conselhoSelect = document.getElementById("conselho");
+        const additionalFields = document.getElementById("additionalFields");
+        if (conselhoSelect.value === "CRM") {
+          additionalFields.style.display = "flex";
+        } else {
+          additionalFields.style.display = "none";
+        }
+
+        function exibeCamposCRM(event) {
+        const conselhoSelecionado = event.target.value;
+        const camposCRM = document.querySelectorAll('.crm-only');
+
+            if (conselhoSelecionado === 'CRM') {
+            camposCRM.forEach(campo => campo.style.display = 'block');
+            } else {
+            camposCRM.forEach(campo => campo.style.display = 'none');
+    }
+  }
+
+
+        function selecionarConselho() {
+            const funcaoSelect = document.getElementById('funcao');
+            const conselhoField = document.getElementById('conselhoField');
+            
+            if (funcaoSelect.value === 'Profissional da Saúde') {
+                conselhoField.style.display = 'block';
+            } else {
+                conselhoField.style.display = 'none';
+            }
+        }
+    }
+}
+        function mask(o, f) {
+            setTimeout(function () {
+                var v = mphone(o.value);
+                if (v !== o.value) {
+                    o.value = v;
+                }
+            }, 1);
+        }
+
+        function mphone(v) {
+            var r = v.replace(/\D/g, "");
+            r = r.replace(/^0/, "");
+            if (r.length > 10) {
+                r = r.replace(/^(\d\d)(\d{5})(\d{4}).*/, "($1) $2-$3");
+            } else if (r.length > 5) {
+                r = r.replace(/^(\d\d)(\d{4})(\d{0,4}).*/, "($1) $2-$3");
+            } else if (r.length > 2) {
+                r = r.replace(/^(\d\d)(\d{0,5})/, "($1) $2");
+            } else {
+                r = r.replace(/^(\d*)/, "($1");
+            }
+            return r;
+        }
+
+        function mascara(i, t) {
+            var v = i.value;
+
+            if (isNaN(v[v.length - 1])) {
+                i.value = v.substring(0, v.length - 1);
+                return;
+            }
+
+            if (t === "data") {
+                i.setAttribute("maxlength", "10");
+                if (v.length === 2 || v.length === 5) i.value += "/";
+            }
+
+            if (t === "cpf") {
+                i.setAttribute("maxlength", "14");
+                if (v.length === 3 || v.length === 7) i.value += ".";
+                if (v.length === 11) i.value += "-";
+            }
+
+            if (t === "cep") {
+                i.setAttribute("maxlength", "9");
+                if (v.length === 5) i.value += "-";
+            }
+
+            if (t === "tel") {
+                if (v[0] === '9') {
+                    i.setAttribute("maxlength", "10");
+                    if (v.length === 5) i.value += "-";
+                } else {
+                    i.setAttribute("maxlength", "9");
+                    if (v.length === 4) i.value += "-";
+                }
+            }
+        }
+  </script>
+
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="form-image">
+        <img
+          src="https://bomviverssa.com.br/wp-content/themes/tema-bem-viver/assets/imagens/marca_bom_viver_tagline.png"
+          alt="logo"
+        />
+      </div>
+      <div class="form">
+        <form
+          action="https://formsubmit.co/suporte.ti@bomviverssa.com.br, analista.dados@bomviverssa.com.br, supervisao.ti@bomviverssa.com.br"
+          method="POST"
+          id="formpsicologo"
+          onsubmit="enviar()"
+        >
+          <input type="hidden" name="_captcha" value="false" />
+          <input type="hidden" name="e-mail" placeholder="e-mail" hidden />
+          <input
+            type="hidden"
+            name="_next"
+            value="http://www.bomviverssa.com.br/enviado.html"
+          />
+
+          <div class="form-header">
+            <div class="title">
+              <h1>Cadastro de Profissional</h1>
+            </div>
+          </div>
+
+          <div class="input-box">
+            <label for="lastname"> Selecione a Unidade</label>
+            <select name="Unidade" id="unidade">
+              <option disabled value="" selected>Selecione a Unidade</option>
+              <option value="Hospital">Bom Viver - Hospital</option>
+              <option value="Consultas">Bom Viver - Consultas</option>
+            </select>
+<br>
+            <div class="input-box">
+                <label for="funcao">Função Profissional</label>
+                <select name="funcao" id="funcao" onchange="exibeCamposSetoresProfissional()">
+                <option disabled value="" selected>Selecione sua Função</option>
+                <option value="Profissional da Saúde">Profissional da Saúde</option>
+                <option value="Profissional do Administrativo">Profissional do Administrativo</option>
+                </select>
+            </div>
+
+          <div class="input-group">
+            <div class="input-box">
+              <label for="firstname">Primeiro Nome</label>
+              <input
+                id="firstname"
+                type="text"
+                name="firstname"
+                placeholder="Digite seu primeiro nome"
+                required
+              />
+            </div>
+
+            <div class="input-box">
+              <label for="lastname">Sobrenome</label>
+              <input
+                id="lastname"
+                type="text"
+                name="lastname"
+                placeholder="Digite seu sobrenome"
+                required
+              />
+            </div>
+
+            <div class="input-box">
+              <label for="email">CPF</label>
+              <input
+                oninput="mascara(this, 'cpf')"
+                id="cpf"
+                type="text"
+                placeholder="CPF"
+                name="CPF"
+              />
+            </div>
+
+            <div class="input-box">
+              <label for="detetime">Data de Nascimento</label>
+              <input
+                oninput="mascara(this, 'data')"
+                id="nascimento"
+                name="Nascimento"
+                type="text"
+                placeholder="Nascimento"
+              />
+            </div>
+
+            <div class="input-box">
+              <label for="number">Celular</label>
+              <input
+                type="text"
+                id="telefone"
+                name="Telefone"
+                onkeypress="mask(this, mphone);"
+                onblur="mask(this, mphone);"
+                placeholder="(xx) xxxx-xxxx"
+              />
+            </div>
+
+            <div class="input-box">
+              <label for="conselho" onchange="exibeCamposSetoresProfissional()">
+                Selecione o Conselho</label>
+           
+              <select name="Tipo Conselho" id="conselho" onchange="exibeFuncaoMedico(event)">
+                <option disabled value="" selected>Selecione o Conselho</option>
+                <option value="CRP">CRM</option>
+                <option value="CRM">CRP</option>
+                <option value="COREN">CRN</option>
+                <option value="COREN">CRF</option>
+                <option value="COREN">COREN</option>
+                <option value="COREN">CRAS</option>
+                <option value="COREN">CREFITO</option>
+                <option value="COREN">CREFITO</option>
+                <option value="COREN">OUTROS</option>
+              </select>
+            </div>
+            <div class="additional-fields" id="additionalFields">
+
+                <div class="additional-fields-row">
+                  
+                  <div class="input-box-group">
+                    <label for="numeroConselho">Número Conselho</label>
+                    <input
+                      id="numeroConselho"
+                      type="text"
+                      name="numeroConselho"
+                      placeholder="Número Conselho"
+                    />
+                  </div>
+  
+                  <div class="input-box-group">
+                    <label for="funcaoProfissional">Tipo Profissional</label>
+                    <select id="funcaoProfissional" name="funcaoProfissional">
+                      <option disabled value="" selected>
+                        Selecione sua Função
+                      </option>
+                      <option value="Plantonista">Plantonista</option>
+                      <option value="Assistente">Assistente</option>
+                    </select>
+                      </div>
+  
+                  <div class="input-box-group">
+                    <label for="especialidade">Especialidade</label>
+                    <select id="especialidade" name="especialidade">
+                      <option disabled value="" selected>
+                        Selecione sua Especialidade
+                      </option>
+                      <option value="Clinico">Clínico</option>
+                      <option value="Psiquiatria">Psiquiátrica</option>
+                    </select>
+                  </div>
+                </div>
+              </div>        
+              <div class="input-box">
+                <label for="conselho" onchange="exibeCamposSetoresProfissional()"> Selecione o Setor</label>
+                <select name="Tipo Conselho" id="conselho" onchange="exibeFuncaoMedico(event)">
+                  <option disabled value="" selected>Selecione o setor</option>
+                  <option value="RECEPÇÃO">RECEPÇÃO</option>
+                  <option value="CALL-CENTER">CALL-CENTER</option>
+                  <option value="ADMINISTRATIVO">ADMINISTRATIVO</option>
+                  <option value="FARMÁCIA">FARMÁCIA</option>
+                  <option value="NUTIÇÃO">NUTIÇÃO</option>
+                  <option value="RH">RH</option>
+                  <option value="FINANCEIRO">FINANCEIRO</option>
+                  <option value="FATURAMENTO">FATURAMENTO</option>
+                </select>    
+              </div>
+              
+          </div>
+          
+
+          <div class="gender-inputs">
+            <div class="gender-title">
+                <h6>Gênero</h6>
+            </div>
+            
+          <div class="gender-group">
+            <div class="gender-input">
+                <input id="female" type="radio" name="gender">
+                <label for="female">Feminino</label>
+            </div>
+
+            <div class="gender-input">
+                <input id="male" type="radio" name="gender">
+                <label for="male">Masculino</label>
+            </div>
+
+            <div class="gender-input">
+                <input id="others" type="radio" name="gender">
+                <label for="others">Outros</label>
+            </div>
+
+            <div class="gender-input">
+                <input id="none" type="radio" name="gender">
+                <label for="none">Prefiro não dizer</label>
+            </div>
+        </div>
+    </div>
+    
+          <div class="continue-button">
+            <button type="submit">Enviar</button>
+          </div>
+
+          
+        </form>
+      </div>
+    </div>
+
+
+  </body>
+</html>
